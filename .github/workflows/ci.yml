@@ -1,7 +1,6 @@
 name: CI Pipeline
 
 on:
-  push:
   pull_request:
     branches:
       - main
@@ -11,25 +10,23 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: 24
+          node-version: 15
 
-      - name: Install Dependencies
-        run: npm install
+      - run: npm install -g npm@7
 
-      - name: Linter
-        run: npm run lint
+      - run: node -v
+      - run: npm -v
 
-      - name: Formatter
-        run: npm run prettier
+      - run: npm install
 
-      - name: Test
-        run: CI=true npm run test
+      - run: npm run lint
 
-      - name: Build
-        run: npm run build
+      - run: npm run prettier
+
+      - run: CI=true npm run test
+
+      - run: npm run build
